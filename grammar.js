@@ -4,6 +4,15 @@ module.exports = grammar({
   rules: {
     source_file: ($) => repeat($._definition),
 
+    _left_paren: ($) => "(",
+    _right_paren: ($) => ")",
+    _left_brace: ($) => "{",
+    _right_brace: ($) => "}",
+    _left_angle: ($) => "<",
+    _right_angle: ($) => ">",
+    _left_bracket: ($) => "[",
+    _right_bracket: ($) => "]",
+
     _definition: ($) =>
       choice(
         $.include_directive,
@@ -22,20 +31,20 @@ module.exports = grammar({
         field("name", $.identifier),
         field("type", $.identifier),
         "=>",
-        "{",
+        $._left_brace,
         repeat($.method_declaration),
-        "}",
+        $._right_brace,
       ),
 
     class_definition: ($) =>
       seq(
         "class",
-        optional(seq("<", sep1($.type_constraint, ","), ">")),
+        optional(seq($._left_angle, sep1($.type_constraint, ","), $._right_angle)),
         field("name", $.identifier),
         "=>",
-        "{",
+        $._left_brace,
         sep1(choice($.field_declaration, $.method_definition), ","),
-        "}",
+        $._right_brace,
       ),
 
     type_constraint: ($) =>
@@ -45,7 +54,7 @@ module.exports = grammar({
         field("constraint", $.identifier),
       ),
 
-    type_parameters: ($) => seq("<", sep1($.identifier, ","), ">"),
+    type_parameters: ($) => seq($._left_angle, sep1($.identifier, ","), $._right_angle),
 
     field_declaration: ($) =>
       seq(
@@ -59,9 +68,9 @@ module.exports = grammar({
       seq(
         choice("public", "private"),
         field("name", $.identifier),
-        "(",
+        $._left_paren,
         optional($.parameter_list),
-        ")",
+        $._right_paren,
         optional(seq(":", field("return_type", $._type))),
         "=>",
         field("body", $.block),
@@ -70,9 +79,9 @@ module.exports = grammar({
     method_declaration: ($) =>
       seq(
         field("name", $.identifier),
-        "(",
+        $._left_paren,
         optional($.parameter_list),
-        ")",
+        $._right_paren,
         ":",
         field("return_type", $._type),
       ),
@@ -81,9 +90,9 @@ module.exports = grammar({
       seq(
         "let",
         field("name", $.identifier),
-        "(",
+        $._left_paren,
         optional($.parameter_list),
-        ")",
+        $._right_paren,
         ":",
         field("return_type", $._type),
         "=>",
@@ -95,7 +104,7 @@ module.exports = grammar({
     parameter: ($) =>
       seq(field("name", $.identifier), ":", field("type", $._type)),
 
-    block: ($) => seq("{", repeat($._statement), "}"),
+    block: ($) => seq($._left_brace, repeat($._statement), $._right_brace),
 
     _statement: ($) =>
       choice(
@@ -159,7 +168,7 @@ module.exports = grammar({
         $.cast_expression,
         $.literal,
         $.identifier,
-        seq("(", $.expression, ")"),
+        seq($._left_paren, $.expression, $._right_paren),
       ),
 
     binary_expression: ($) =>
@@ -176,8 +185,8 @@ module.exports = grammar({
               "/",
               "=",
               "!=",
-              "<",
-              ">",
+              $._left_angle,
+              $._right_angle,
               "<=",
               ">=",
               "&&",
@@ -203,9 +212,9 @@ module.exports = grammar({
         3,
         seq(
           field("function", $._callable),
-          "(",
+          $._left_paren,
           optional($.argument_list),
-          ")",
+          $._right_paren,
         ),
       ),
 
@@ -230,7 +239,7 @@ module.exports = grammar({
     simple_type: ($) => $.identifier,
 
     generic_type: ($) =>
-      seq(field("base", $.identifier), "<", sep1($._type, ","), ">"),
+      seq(field("base", $.identifier), $._left_angle, sep1($._type, ","), $._right_angle),
 
     _assignable: ($) => choice($.identifier, $.member_access),
 
