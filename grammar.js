@@ -29,10 +29,9 @@ module.exports = grammar({
     module_definition: ($) =>
       seq(
         "module",
-        $.identifier,
+        field("name", $.identifier),
         $._left_brace,
         repeat($._definition),
-        "}",
         $._right_brace,
       ),
     interface_definition: ($) =>
