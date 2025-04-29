@@ -19,12 +19,22 @@ module.exports = grammar({
         $.interface_definition,
         $.class_definition,
         $.function_definition,
+        $.module_definition,
       ),
 
     include_directive: ($) => seq("@include", $.namespace_path),
 
     namespace_path: ($) => sep1(field("segment", $.identifier), "::"),
 
+    module_definition: ($) =>
+      seq(
+        "module",
+        $.identifier,
+        $._left_brace,
+        repeat($._definition),
+        "}",
+        $._right_brace,
+      ),
     interface_definition: ($) =>
       seq(
         "interface",
@@ -39,7 +49,9 @@ module.exports = grammar({
     class_definition: ($) =>
       seq(
         "class",
-        optional(seq($._left_angle, sep1($.type_constraint, ","), $._right_angle)),
+        optional(
+          seq($._left_angle, sep1($.type_constraint, ","), $._right_angle),
+        ),
         field("name", $.identifier),
         "=>",
         $._left_brace,
@@ -54,7 +66,8 @@ module.exports = grammar({
         field("constraint", $.identifier),
       ),
 
-    type_parameters: ($) => seq($._left_angle, sep1($.identifier, ","), $._right_angle),
+    type_parameters: ($) =>
+      seq($._left_angle, sep1($.identifier, ","), $._right_angle),
 
     field_declaration: ($) =>
       seq(
@@ -239,7 +252,12 @@ module.exports = grammar({
     simple_type: ($) => $.identifier,
 
     generic_type: ($) =>
-      seq(field("base", $.identifier), $._left_angle, sep1($._type, ","), $._right_angle),
+      seq(
+        field("base", $.identifier),
+        $._left_angle,
+        sep1($._type, ","),
+        $._right_angle,
+      ),
 
     _assignable: ($) => choice($.identifier, $.member_access),
 
