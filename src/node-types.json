@@ -67,6 +67,10 @@
             "named": false
           },
           {
+            "type": "%",
+            "named": false
+          },
+          {
             "type": "&&",
             "named": false
           },
@@ -709,6 +713,48 @@
     }
   },
   {
+    "type": "module_definition",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "class_definition",
+          "named": true
+        },
+        {
+          "type": "function_definition",
+          "named": true
+        },
+        {
+          "type": "include_directive",
+          "named": true
+        },
+        {
+          "type": "interface_definition",
+          "named": true
+        },
+        {
+          "type": "module_definition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "namespace_path",
     "named": true,
     "fields": {
@@ -851,6 +897,10 @@
         },
         {
           "type": "interface_definition",
+          "named": true
+        },
+        {
+          "type": "module_definition",
           "named": true
         }
       ]
@@ -999,6 +1049,10 @@
     "named": false
   },
   {
+    "type": "%",
+    "named": false
+  },
+  {
     "type": "&",
     "named": false
   },
@@ -1083,6 +1137,14 @@
     "named": false
   },
   {
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
+    "named": false
+  },
+  {
     "type": "class",
     "named": false
   },
@@ -1116,6 +1178,10 @@
   },
   {
     "type": "let",
+    "named": false
+  },
+  {
+    "type": "module",
     "named": false
   },
   {
