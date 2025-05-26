@@ -31,7 +31,7 @@ module.exports = grammar({
         "}",
       ),
 
-    generic_parameters: ($) => seq("<", $.identifier, ">"),
+    generic_parameters: ($) => seq("<", sep1($.identifier, ","), ">"),
 
     class_member: ($) =>
       choice(
@@ -98,7 +98,8 @@ module.exports = grammar({
 
     pointer_type: ($) => prec.left(2, seq($.type, "*")),
 
-    generic_type: ($) => prec(2, seq($.identifier, "<", $.type, ">")),
+    generic_type: ($) =>
+      prec(2, seq($.identifier, "<", sep1($.type, ","), ">")),
 
     // Variable declarations like "let x: int => 5;"
     variable_declaration: ($) =>

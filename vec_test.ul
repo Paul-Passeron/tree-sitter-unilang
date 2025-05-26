@@ -65,6 +65,21 @@ class String => {
     }
 }
 
+
+class <A, B, C> c => {
+    public a: A;
+    public b: B;
+    public c: C;
+
+    public new() => {
+        exit(7);
+    }
+}
+
+
+let foo(): int => {
+    let z: c<int, Vec<int>, String> => @as c<int, Vec<int>, String> () ;
+
 let foo(): int => {
     let x: String => @as String ("Hello, World !");
     x::push_str("What is going on ???");
