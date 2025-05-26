@@ -1,0 +1,83 @@
+@include std::io
+@include std::mem
+@include std::sys
+@include std::vec
+
+
+class String => {
+    private vec: Vec<char>;
+    public new() => {
+        self::vec => @as Vec<char>();
+    }
+
+    public new(s: char *, l: int) => {
+        self::new();
+        let i: int => 0;
+        while i < l => {
+            self::vec::append(s[i]);
+            i => i + 1;
+        }
+    }
+
+    public new(c: char *) => {
+        self::new(c, strlen(c));
+    }
+
+
+    public push(c: char): void => {
+        self::vec::append(c);
+    }
+
+    public push_str(str: char *): void => {
+        let l: int => strlen(str);
+        let i: int => 0;
+        while i < l => {
+            self::vec::append(str[i]);
+            i => i + 1;
+        }
+
+    }
+
+    public len(): int => {
+        return self::vec::len();
+    }
+
+    public print(): void => {
+        let i: int => 0;
+        while i < self::vec::len() => {
+            printf("%c", self::vec::get(i));
+            i => i + 1;
+        }
+    }
+
+    public println(): void => {
+        self::print();
+        printf("\n");
+    }
+
+    public drop(): void => {
+        self::vec::drop();
+    }
+
+    public copy(): String => {
+        let res: String => @as String (self::vec::contents, self::vec::len);
+        return res;
+    }
+}
+
+let foo(): int => {
+    let x: String => @as String ("Hello, World !");
+    x::push_str("What is going on ???");
+    let y: String => x::copy();
+    y::println();
+    x::println();
+    x::drop();
+    y::drop();
+    return 0;
+}
+
+let main(): int => {
+    let res: int => foo();
+    printf("Got here !\n");
+    return 0;
+}

@@ -34,8 +34,11 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "@include"
+          "type": "TOKEN",
+          "content": {
+            "type": "STRING",
+            "value": "@include"
+          }
         },
         {
           "type": "SYMBOL",
@@ -442,7 +445,7 @@
     },
     "pointer_type": {
       "type": "PREC_LEFT",
-      "value": 0,
+      "value": 2,
       "content": {
         "type": "SEQ",
         "members": [
@@ -749,6 +752,10 @@
         {
           "type": "SYMBOL",
           "name": "cast_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "size_expression"
         },
         {
           "type": "SYMBOL",
@@ -1140,8 +1147,11 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "@as"
+          "type": "TOKEN",
+          "content": {
+            "type": "STRING",
+            "value": "@as"
+          }
         },
         {
           "type": "SYMBOL",
@@ -1168,6 +1178,26 @@
           "value": ")"
         }
       ]
+    },
+    "size_expression": {
+      "type": "PREC",
+      "value": 3,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "TOKEN",
+            "content": {
+              "type": "STRING",
+              "value": "@size"
+            }
+          },
+          {
+            "type": "SYMBOL",
+            "name": "type"
+          }
+        ]
+      }
     },
     "parenthesized_expression": {
       "type": "SEQ",

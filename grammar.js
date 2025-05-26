@@ -15,7 +15,7 @@ module.exports = grammar({
       ),
 
     // Include statements like @include std::io
-    include_statement: ($) => seq("@include", $.module_path),
+    include_statement: ($) => seq(token("@include"), $.module_path),
 
     module_path: ($) => sep1($.identifier, "::"),
 
@@ -96,7 +96,7 @@ module.exports = grammar({
 
     primitive_type: ($) => choice("int", "char", "void", "float", "double"),
 
-    pointer_type: ($) => prec.left(seq($.type, "*")),
+    pointer_type: ($) => prec.left(2, seq($.type, "*")),
 
     generic_type: ($) => prec(2, seq($.identifier, "<", $.type, ">")),
 
@@ -146,6 +146,7 @@ module.exports = grammar({
         $.member_access,
         $.array_access,
         $.cast_expression,
+        $.size_expression,
         $.parenthesized_expression,
       ),
 
@@ -208,7 +209,10 @@ module.exports = grammar({
 
     // Cast expressions like "@as Vec<int>()"
     cast_expression: ($) =>
-      seq("@as", $.type, "(", optional($.argument_list), ")"),
+      seq(token("@as"), $.type, "(", optional($.argument_list), ")"),
+
+    // Size expressions like "@size T"
+    size_expression: ($) => prec(3, seq(token("@size"), $.type)),
 
     parenthesized_expression: ($) => seq("(", $._expression, ")"),
 
