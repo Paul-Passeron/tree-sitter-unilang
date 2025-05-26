@@ -34,12 +34,12 @@
   "double"
 ] @type.builtin
 
-; Special operators and directives
-[
-  "@include"
-  "@as"
-  "@size"
-] @keyword.directive
+; ; Special operators and directives
+; [
+;   "@include"
+;   "@as"
+;   "@size"
+; ] @keyword.directive
 
 ; Assignment and member access operators
 [
@@ -97,7 +97,7 @@
 
 ; Class names in declarations
 (class_declaration
-  name: (identifier) @type)
+  (identifier) @type)
 
 ; Function names in declarations
 (function_declaration

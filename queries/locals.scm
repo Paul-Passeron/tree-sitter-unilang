@@ -13,7 +13,7 @@
   name: (identifier) @local.definition.method)
 
 (class_declaration
-  name: (identifier) @local.definition.type)
+  (identifier) @local.definition.type)
 
 (variable_declaration
   (identifier) @local.definition.variable)
