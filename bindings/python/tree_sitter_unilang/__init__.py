@@ -1,4 +1,4 @@
-"""Unilang grammar for tree-sitter"""
+"""Parser for the Unilang programming language"""
 
 from importlib.resources import files as _files
 

@@ -6,7 +6,7 @@
         "<!(node -p \"require('node-addon-api').targets\"):node_addon_api_except",
       ],
       "include_dirs": [
-        "src",
+        "src"
       ],
       "sources": [
         "bindings/node/binding.cc",
@@ -18,10 +18,10 @@
           "cflags_c": [
             "-std=c11",
           ],
-        }, { # OS == "win"
+        }],
+        ["OS=='win'", {
           "cflags_c": [
             "/std:c11",
-            "/utf-8",
           ],
         }],
       ],

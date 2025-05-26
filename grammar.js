@@ -1,276 +1,313 @@
 module.exports = grammar({
   name: "unilang",
-  extras: ($) => [/[\s\t\n\r]/, $.comment],
+
+  extras: ($) => [/\s/, $.comment],
+
   rules: {
-    source_file: ($) => repeat($._definition),
+    // @ts-ignore
+    source_file: ($) => repeat($._top_level_item),
 
-    _left_paren: ($) => "(",
-    _right_paren: ($) => ")",
-    _left_brace: ($) => "{",
-    _right_brace: ($) => "}",
-    _left_angle: ($) => "<",
-    _right_angle: ($) => ">",
-    _left_bracket: ($) => "[",
-    _right_bracket: ($) => "]",
-
-    _definition: ($) =>
+    _top_level_item: ($) =>
+      // @ts-ignore
       choice(
-        $.include_directive,
-        $.interface_definition,
-        $.class_definition,
-        $.function_definition,
-        $.module_definition,
+        $.include_statement,
+        $.class_declaration,
+        $.function_declaration,
+        $.variable_declaration,
       ),
 
-    include_directive: ($) => seq("@include", $.namespace_path),
+    // Include statements like @include std::io
+    // @ts-ignore
+    include_statement: ($) => seq("@include", $.module_path),
 
-    namespace_path: ($) => sep1(field("segment", $.identifier), "::"),
+    module_path: ($) => sep1($.identifier, "::"),
 
-    module_definition: ($) =>
-      seq(
-        "module",
-        field("name", $.identifier),
-        $._left_brace,
-        repeat($._definition),
-        $._right_brace,
-      ),
-    interface_definition: ($) =>
-      seq(
-        "interface",
-        field("name", $.identifier),
-        field("type", $.identifier),
-        "=>",
-        $._left_brace,
-        repeat($.method_declaration),
-        $._right_brace,
-      ),
-
-    class_definition: ($) =>
+    // Class declarations with optional generics
+    class_declaration: ($) =>
+      // @ts-ignore
       seq(
         "class",
-        optional(
-          seq($._left_angle, sep1($.type_constraint, ","), $._right_angle),
-        ),
-        field("name", $.identifier),
+        // @ts-ignore
+        optional($.generic_parameters),
+        $.identifier,
         "=>",
-        $._left_brace,
-        sep1(choice($.field_declaration, $.method_definition), ","),
-        $._right_brace,
+        "{",
+        // @ts-ignore
+        repeat($.class_member),
+        "}",
       ),
 
-    type_constraint: ($) =>
-      seq(
-        field("type", $.identifier),
-        "impl",
-        field("constraint", $.identifier),
+    // @ts-ignore
+    generic_parameters: ($) => seq("<", $.identifier, ">"),
+
+    class_member: ($) =>
+      // @ts-ignore
+      choice(
+        $.field_declaration,
+        $.method_declaration,
+        $.constructor_declaration,
       ),
 
-    type_parameters: ($) =>
-      seq($._left_angle, sep1($.identifier, ","), $._right_angle),
-
+    // Field declarations like "private contents: T*;"
     field_declaration: ($) =>
+      // @ts-ignore
       seq(
-        choice("public", "private"),
+        // @ts-ignore
+        choice("private", "public"),
+        // @ts-ignore
         field("name", $.identifier),
         ":",
-        field("type", $._type),
+        // @ts-ignore
+        field("type", $.type),
+        ";",
       ),
 
-    method_definition: ($) =>
-      seq(
-        choice("public", "private"),
-        field("name", $.identifier),
-        $._left_paren,
-        optional($.parameter_list),
-        $._right_paren,
-        optional(seq(":", field("return_type", $._type))),
-        "=>",
-        field("body", $.block),
-      ),
-
+    // Method declarations
     method_declaration: ($) =>
+      // @ts-ignore
       seq(
+        "public",
+        // @ts-ignore
         field("name", $.identifier),
-        $._left_paren,
+        "(",
+        // @ts-ignore
         optional($.parameter_list),
-        $._right_paren,
-        ":",
-        field("return_type", $._type),
+        ")",
+        // @ts-ignore
+        optional(seq(":", $.type)),
+        "=>",
+        $.block,
       ),
 
-    function_definition: ($) =>
+    // Constructor declarations
+    constructor_declaration: ($) =>
+      // @ts-ignore
+      seq(
+        "public",
+        "new",
+        "(",
+        // @ts-ignore
+        optional($.parameter_list),
+        ")",
+        "=>",
+        $.block,
+      ),
+
+    // Function declarations like "let main(): int => { ... }"
+    function_declaration: ($) =>
+      // @ts-ignore
       seq(
         "let",
+        // @ts-ignore
         field("name", $.identifier),
-        $._left_paren,
+        "(",
+        // @ts-ignore
         optional($.parameter_list),
-        $._right_paren,
+        ")",
         ":",
-        field("return_type", $._type),
+        $.type,
         "=>",
-        field("body", $.block),
+        $.block,
       ),
 
     parameter_list: ($) => sep1($.parameter, ","),
 
-    parameter: ($) =>
-      seq(field("name", $.identifier), ":", field("type", $._type)),
+    // @ts-ignore
+    parameter: ($) => seq($.identifier, ":", $.type),
 
-    block: ($) => seq($._left_brace, repeat($._statement), $._right_brace),
+    // Type system
+    type: ($) =>
+      // @ts-ignore
+      choice($.primitive_type, $.pointer_type, $.generic_type, $.identifier),
+
+    // @ts-ignore
+    primitive_type: ($) => choice("int", "char", "void", "float", "double"),
+
+    // @ts-ignore
+    pointer_type: ($) => seq($.type, "*"),
+
+    // @ts-ignore
+    generic_type: ($) => seq($.identifier, "<", $.type, ">"),
+
+    // Variable declarations like "let x: int => 5;"
+    variable_declaration: ($) =>
+      // @ts-ignore
+      seq("let", $.identifier, ":", $.type, "=>", $._expression, ";"),
+
+    // Block statements
+    // @ts-ignore
+    block: ($) => seq("{", repeat($._statement), "}"),
 
     _statement: ($) =>
+      // @ts-ignore
       choice(
+        $.expression_statement,
         $.variable_declaration,
         $.assignment_statement,
         $.if_statement,
         $.while_statement,
         $.return_statement,
-        $.expression_statement,
         $.block,
       ),
 
-    variable_declaration: ($) =>
-      seq(
-        "let",
-        field("name", $.identifier),
-        ":",
-        field("type", $._type),
-        optional(seq("=>", field("value", $.expression))),
-        ";",
-      ),
+    // @ts-ignore
+    expression_statement: ($) => seq($._expression, ";"),
 
-    assignment_statement: ($) =>
-      seq(
-        field("target", $._assignable),
-        "=>",
-        field("value", $.expression),
-        ";",
-      ),
+    // Assignment statements like "x => 5;"
+    // @ts-ignore
+    assignment_statement: ($) => seq($.lvalue, "=>", $._expression, ";"),
 
+    // @ts-ignore
+    lvalue: ($) => choice($.identifier, $.member_access, $.array_access),
+
+    // Control flow
     if_statement: ($) =>
-      prec.left(
-        seq(
-          "if",
-          field("condition", $.expression),
-          "=>",
-          field("consequence", $._statement),
-          optional(seq("else", field("alternative", $._statement))),
-        ),
-      ),
-
-    while_statement: ($) =>
+      // @ts-ignore
       seq(
-        "while",
-        field("condition", $.expression),
+        "if",
+        $._expression,
         "=>",
-        field("body", $.block),
+        $.block,
+        // @ts-ignore
+        optional(seq("else", $.block)),
       ),
 
-    return_statement: ($) => seq("return", optional($.expression), ";"),
+    // @ts-ignore
+    while_statement: ($) => seq("while", $._expression, "=>", $.block),
 
-    expression_statement: ($) => seq($.expression, ";"),
+    // @ts-ignore
+    return_statement: ($) => seq("return", optional($._expression), ";"),
 
-    expression: ($) =>
+    // Expressions
+    _expression: ($) =>
+      // @ts-ignore
       choice(
+        $.identifier,
+        $.number,
+        $.string,
+        $.char,
         $.binary_expression,
         $.unary_expression,
         $.call_expression,
         $.member_access,
-        $.new_expression,
+        $.array_access,
         $.cast_expression,
-        $.literal,
-        $.identifier,
-        seq($._left_paren, $.expression, $._right_paren),
+        $.parenthesized_expression,
       ),
 
-    binary_expression: ($) =>
-      prec.left(
-        1,
-        seq(
-          field("left", $.expression),
-          field(
-            "operator",
-            choice(
-              "+",
-              "-",
-              "*",
-              "/",
-              "=",
-              "!=",
-              $._left_angle,
-              $._right_angle,
-              "<=",
-              ">=",
-              "&&",
-              "||",
-              "%",
+    binary_expression: ($) => {
+      const table = [
+        // @ts-ignore
+        [9, choice("*", "/", "%")],
+        // @ts-ignore
+        [8, choice("+", "-")],
+        // @ts-ignore
+        [7, choice("<", ">", "<=", ">=")],
+        // @ts-ignore
+        [6, choice("==", "!=")],
+        [5, "&&"],
+        [4, "||"],
+      ];
+
+      // @ts-ignore
+      return choice(
+        ...table.map(([precedence, operator]) =>
+          // @ts-ignore
+          prec.left(
+            precedence,
+            // @ts-ignore
+            seq(
+              // @ts-ignore
+              field("left", $._expression),
+              // @ts-ignore
+              field("operator", operator),
+              // @ts-ignore
+              field("right", $._expression),
             ),
           ),
-          field("right", $.expression),
         ),
-      ),
+      );
+    },
 
     unary_expression: ($) =>
+      // @ts-ignore
       prec(
-        2,
+        10,
+        // @ts-ignore
         seq(
-          field("operator", choice("!", "-", "&", "$")),
-          field("operand", $.expression),
+          // @ts-ignore
+          field("operator", choice("!", "-", "&", "*")),
+          // @ts-ignore
+          field("operand", $._expression),
         ),
       ),
 
     call_expression: ($) =>
-      prec(
-        3,
-        seq(
-          field("function", $._callable),
-          $._left_paren,
-          optional($.argument_list),
-          $._right_paren,
-        ),
-      ),
-
-    _callable: ($) => choice($.identifier, $.member_access),
-
-    member_access: ($) =>
-      prec(
-        4,
-        seq(field("object", $.expression), "::", field("member", $.identifier)),
-      ),
-
-    new_expression: ($) =>
-      seq("@new", field("type", $._type), field("arguments", $.expression)),
-
-    cast_expression: ($) =>
-      seq("@as", field("type", $._type), field("value", $.expression)),
-
-    argument_list: ($) => sep1($.expression, ","),
-
-    _type: ($) => choice($.simple_type, $.generic_type),
-
-    simple_type: ($) => $.identifier,
-
-    generic_type: ($) =>
+      // @ts-ignore
       seq(
-        field("base", $.identifier),
-        $._left_angle,
-        sep1($._type, ","),
-        $._right_angle,
+        // @ts-ignore
+        field("function", $._expression),
+        "(",
+        // @ts-ignore
+        optional($.argument_list),
+        ")",
       ),
 
-    _assignable: ($) => choice($.identifier, $.member_access),
+    // Member access with :: operator
+    member_access: ($) =>
+      // @ts-ignore
+      seq(
+        // @ts-ignore
+        field("object", $._expression),
+        "::",
+        // @ts-ignore
+        field("property", $.identifier),
+      ),
 
-    literal: ($) =>
-      choice($.number_literal, $.string_literal, $.boolean_literal),
+    array_access: ($) =>
+      // @ts-ignore
+      seq(
+        // @ts-ignore
+        field("array", $._expression),
+        "[",
+        // @ts-ignore
+        field("index", $._expression),
+        "]",
+      ),
 
-    number_literal: ($) => /[0-9]+/,
-    string_literal: ($) => /"[^"]*"/,
-    boolean_literal: ($) => choice("true", "false"),
+    // Cast expressions like "@as Vec<int>()"
+    cast_expression: ($) =>
+      // @ts-ignore
+      seq("@as", $.type, "(", optional($.argument_list), ")"),
+
+    // @ts-ignore
+    parenthesized_expression: ($) => seq("(", $._expression, ")"),
+
+    argument_list: ($) => sep1($._expression, ","),
+
+    // Literals
+    // @ts-ignore
     identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_]*/,
-    comment: ($) => token(seq("//", /.*/)),
+
+    // @ts-ignore
+    number: ($) => /\d+/,
+
+    // @ts-ignore
+    string: ($) => seq('"', repeat(choice(/[^"\\]/, /\\./)), '"'),
+
+    // @ts-ignore
+    char: ($) => seq("'", choice(/[^'\\]/, /\\./), "'"),
+
+    // Comments
+    // @ts-ignore
+    comment: ($) =>
+      // @ts-ignore
+      choice(seq("//", /.*/), seq("/*", /[^*]*\*+([^/*][^*]*\*+)*/, "/")),
   },
 });
 
+// Helper function for comma-separated lists
 function sep1(rule, separator) {
+  // @ts-ignore
   return seq(rule, repeat(seq(separator, rule)));
 }

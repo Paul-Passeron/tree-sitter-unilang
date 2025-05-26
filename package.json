@@ -1,41 +1,32 @@
 {
   "name": "tree-sitter-unilang",
-  "version": "0.0.1",
-  "description": "Unilang grammar for tree-sitter",
-  "repository": "github:tree-sitter/tree-sitter-unilang",
-  "license": "MIT",
+  "version": "1.0.0",
+  "description": "Tree-sitter grammar for Unilang programming language",
   "main": "bindings/node",
   "types": "bindings/node",
   "keywords": [
-    "incremental",
     "parsing",
+    "incremental",
     "tree-sitter",
     "unilang"
   ],
-  "files": [
-    "grammar.js",
-    "binding.gyp",
-    "prebuilds/**",
-    "bindings/node/*",
-    "queries/*",
-    "src/**",
-    "*.wasm"
-  ],
+  "author": "Your Name",
+  "license": "MIT",
   "dependencies": {
-    "node-addon-api": "^8.0.0",
-    "node-gyp-build": "^4.8.1"
-  },
-  "devDependencies": {
-    "prebuildify": "^6.0.1",
-    "tree-sitter-cli": "^0.23.2"
+    "node-addon-api": "^7.1.0",
+    "node-gyp-build": "^4.8.0"
   },
   "peerDependencies": {
-    "tree-sitter": "^0.21.1"
+    "tree-sitter": "^0.21.0"
   },
   "peerDependenciesMeta": {
     "tree-sitter": {
       "optional": true
     }
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.22.2",
+    "prebuildify": "^6.0.0"
   },
   "scripts": {
     "install": "node-gyp-build",
@@ -43,10 +34,28 @@
     "start": "tree-sitter playground",
     "test": "node --test bindings/node/*_test.js"
   },
+  "files": [
+    "grammar.js",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/**",
+    "queries/*",
+    "src/**"
+  ],
   "tree-sitter": [
     {
       "scope": "source.unilang",
-      "injection-regex": "^unilang$"
+      "file-types": [
+        "uni",
+        "unilang"
+      ]
     }
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/tree-sitter-unilang.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/tree-sitter-unilang/issues"
+  }
 }
