@@ -31,7 +31,7 @@ module.exports = grammar({
         "}",
       ),
 
-    generic_parameters: ($) => seq("<", sep1($.identifier, ","), ">"),
+    generic_parameters: ($) => prec(1, seq("<", sep1($.identifier, ","), ">")),
 
     class_member: ($) =>
       choice(
