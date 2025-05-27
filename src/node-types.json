@@ -842,6 +842,59 @@
     }
   },
   {
+    "type": "interface_decl",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "interface_members",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "interface_members",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "parameter_list",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "lvalue",
     "named": true,
     "fields": {},
@@ -1189,6 +1242,10 @@
         },
         {
           "type": "include_statement",
+          "named": true
+        },
+        {
+          "type": "interface_decl",
           "named": true
         },
         {
@@ -1588,6 +1645,10 @@
   },
   {
     "type": "int",
+    "named": false
+  },
+  {
+    "type": "interface",
     "named": false
   },
   {

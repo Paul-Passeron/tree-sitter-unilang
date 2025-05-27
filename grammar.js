@@ -8,6 +8,7 @@ module.exports = grammar({
 
     _top_level_item: ($) =>
       choice(
+        $.interface_decl,
         $.include_statement,
         $.class_declaration,
         $.function_declaration,
@@ -16,6 +17,28 @@ module.exports = grammar({
 
     // Include statements like @include std::io
     include_statement: ($) => seq(token("@include"), $.module_path),
+
+    interface_decl: ($) =>
+      seq(
+        "interface",
+        $.identifier,
+        repeat($.identifier),
+        "=>",
+        "{",
+        repeat($.interface_members),
+        "}",
+      ),
+
+    interface_members: ($) =>
+      seq(
+        $.identifier,
+        field("name", $.identifier),
+        "(",
+        optional($.parameter_list),
+        ")",
+        optional(seq(":", $.type)),
+        ";",
+      ),
 
     module_path: ($) => sep1($.identifier, "::"),
 
