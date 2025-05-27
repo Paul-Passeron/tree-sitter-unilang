@@ -21,7 +21,7 @@ module.exports = grammar({
     interface_declaration: ($) =>
       seq(
         "interface",
-        $.identifier,
+        field("name", $.identifier),
         repeat($.identifier),
         "=>",
         "{",
