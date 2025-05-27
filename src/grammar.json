@@ -14,7 +14,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "interface_decl"
+          "name": "interface_declaration"
         },
         {
           "type": "SYMBOL",
@@ -50,7 +50,7 @@
         }
       ]
     },
-    "interface_decl": {
+    "interface_declaration": {
       "type": "SEQ",
       "members": [
         {
@@ -58,8 +58,12 @@
           "value": "interface"
         },
         {
-          "type": "SYMBOL",
-          "name": "identifier"
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
         },
         {
           "type": "REPEAT",
