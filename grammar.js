@@ -13,9 +13,9 @@ module.exports = grammar({
         $.class_declaration,
         $.interface_declaration,
         $.impl_block,
-        seq("@include", $.typename),
+        $.include_dir,
       ),
-
+    include_dir: ($) => seq("@include", $.typename),
     interface_declaration: ($) =>
       seq(
         "interface",
