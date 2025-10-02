@@ -282,7 +282,7 @@
           "name": "trait_name",
           "content": {
             "type": "SYMBOL",
-            "name": "identifier"
+            "name": "typename"
           }
         },
         {

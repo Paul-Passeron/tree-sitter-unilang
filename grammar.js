@@ -52,7 +52,7 @@ module.exports = grammar({
       seq(
         "impl",
         optional($.templates),
-        field("trait_name", $.identifier),
+        field("trait_name", $.typename), // Changed from $.identifier to $.typename
         "for",
         field("target_type", $.type),
         "=>",

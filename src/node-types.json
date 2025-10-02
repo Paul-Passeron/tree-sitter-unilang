@@ -289,7 +289,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "typename",
             "named": true
           }
         ]
