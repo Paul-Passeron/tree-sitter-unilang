@@ -59,7 +59,7 @@ module.exports = grammar({
             seq("type", $.identifier, "=>", $.type, ";"),
             seq(
               choice("public", "private"),
-              $.identifier,
+              field("method_name", $.identifier),
               "(",
               commaSep($.parameter),
               ")",
@@ -74,6 +74,31 @@ module.exports = grammar({
         ),
         "}",
       ),
+
+    class_items: ($) =>
+      seq(
+        choice("public", "private"),
+        choice(
+          seq(
+            field("name", $.identifier),
+            "(",
+            commaSep($.parameter),
+            ")",
+            optional(seq(":", $.type)),
+            "=>",
+            "{",
+            repeat($.statement),
+            "}",
+          ),
+          seq(
+            field("name", $.identifier),
+            seq(":", $.type),
+            optional(seq("=>", $.expr)),
+            ";",
+          ),
+        ),
+      ),
+
     module_declaration: ($) =>
       seq("mod", $.identifier, "=>", "{", repeat($._item), "}"),
     class_declaration: ($) =>
@@ -85,29 +110,6 @@ module.exports = grammar({
         "{",
         repeat($.class_items),
         "}",
-      ),
-    class_items: ($) =>
-      seq(
-        choice("public", "private"),
-        choice(
-          seq(
-            $.identifier,
-            "(",
-            commaSep($.parameter),
-            ")",
-            optional(seq(":", $.type)),
-            "=>",
-            "{",
-            repeat($.statement),
-            "}",
-          ),
-          seq(
-            $.identifier, //
-            seq(":", $.type),
-            optional(seq("=>", $.expr)),
-            ";",
-          ),
-        ),
       ),
     function_declaration: ($) =>
       seq(
