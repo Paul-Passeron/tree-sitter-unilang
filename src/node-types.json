@@ -387,6 +387,21 @@
     }
   },
   {
+    "type": "include_dir",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "typename",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "interface_declaration",
     "named": true,
     "fields": {
@@ -511,15 +526,15 @@
           "named": true
         },
         {
+          "type": "include_dir",
+          "named": true
+        },
+        {
           "type": "interface_declaration",
           "named": true
         },
         {
           "type": "module_declaration",
-          "named": true
-        },
-        {
-          "type": "typename",
           "named": true
         }
       ]
@@ -566,15 +581,15 @@
           "named": true
         },
         {
+          "type": "include_dir",
+          "named": true
+        },
+        {
           "type": "interface_declaration",
           "named": true
         },
         {
           "type": "module_declaration",
-          "named": true
-        },
-        {
-          "type": "typename",
           "named": true
         }
       ]
