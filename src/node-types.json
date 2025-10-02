@@ -84,6 +84,11 @@
     }
   },
   {
+    "type": "char",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "class_declaration",
     "named": true,
     "fields": {},
@@ -156,11 +161,23 @@
           "named": true
         },
         {
+          "type": "char",
+          "named": true
+        },
+        {
           "type": "expr",
           "named": true
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "string",
           "named": true
         },
         {
@@ -365,6 +382,11 @@
     }
   },
   {
+    "type": "string",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "templates",
     "named": true,
     "fields": {},
@@ -431,6 +453,10 @@
     "named": false
   },
   {
+    "type": "\"",
+    "named": false
+  },
+  {
     "type": "%",
     "named": false
   },
@@ -440,6 +466,10 @@
   },
   {
     "type": "&&",
+    "named": false
+  },
+  {
+    "type": "'",
     "named": false
   },
   {
@@ -569,6 +599,10 @@
   {
     "type": "mod",
     "named": false
+  },
+  {
+    "type": "number",
+    "named": true
   },
   {
     "type": "private",
