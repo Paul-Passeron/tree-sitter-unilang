@@ -112,7 +112,56 @@
     }
   },
   {
+    "type": "class_field",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expr",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "class_items",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "class_field",
+          "named": true
+        },
+        {
+          "type": "class_method",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "class_method",
     "named": true,
     "fields": {
       "name": {
@@ -130,10 +179,6 @@
       "multiple": true,
       "required": false,
       "types": [
-        {
-          "type": "expr",
-          "named": true
-        },
         {
           "type": "parameter",
           "named": true
@@ -229,16 +274,6 @@
     "type": "impl_block",
     "named": true,
     "fields": {
-      "method_name": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
       "name": {
         "multiple": false,
         "required": true,
@@ -259,15 +294,45 @@
           "named": true
         },
         {
+          "type": "impl_method",
+          "named": true
+        },
+        {
+          "type": "templates",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "impl_method",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "statement",
-          "named": true
-        },
-        {
-          "type": "templates",
           "named": true
         },
         {

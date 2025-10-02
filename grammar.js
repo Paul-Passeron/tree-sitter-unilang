@@ -44,7 +44,6 @@ module.exports = grammar({
         ),
         "}",
       ),
-
     impl_block: ($) =>
       seq(
         "impl",
@@ -55,50 +54,61 @@ module.exports = grammar({
         "=>",
         "{",
         repeat(
-          choice(
-            seq("type", $.identifier, "=>", $.type, ";"),
-            seq(
-              choice("public", "private"),
-              field("method_name", $.identifier),
-              "(",
-              commaSep($.parameter),
-              ")",
-              ":",
-              $.type,
-              "=>",
-              "{",
-              repeat($.statement),
-              "}",
-            ),
-          ),
+          choice(seq("type", $.identifier, "=>", $.type, ";"), $.impl_method),
         ),
         "}",
       ),
 
-    class_items: ($) =>
+    impl_method: ($) =>
       seq(
         choice("public", "private"),
-        choice(
-          seq(
-            field("name", $.identifier),
-            "(",
-            commaSep($.parameter),
-            ")",
-            optional(seq(":", $.type)),
-            "=>",
-            "{",
-            repeat($.statement),
-            "}",
-          ),
-          seq(
-            field("name", $.identifier),
-            seq(":", $.type),
-            optional(seq("=>", $.expr)),
-            ";",
-          ),
-        ),
+        field("name", $.identifier),
+        "(",
+        commaSep($.parameter),
+        ")",
+        ":",
+        $.type,
+        "=>",
+        "{",
+        repeat($.statement),
+        "}",
       ),
 
+    class_declaration: ($) =>
+      seq(
+        "class",
+        optional($.templates),
+        field("name", $.identifier),
+        "=>",
+        "{",
+        repeat($.class_items),
+        "}",
+      ),
+
+    class_items: ($) => choice($.class_method, $.class_field),
+
+    class_method: ($) =>
+      seq(
+        choice("public", "private"),
+        field("name", $.identifier),
+        "(",
+        commaSep($.parameter),
+        ")",
+        optional(seq(":", $.type)),
+        "=>",
+        "{",
+        repeat($.statement),
+        "}",
+      ),
+
+    class_field: ($) =>
+      seq(
+        choice("public", "private"),
+        field("name", $.identifier),
+        seq(":", $.type),
+        optional(seq("=>", $.expr)),
+        ";",
+      ),
     module_declaration: ($) =>
       seq("mod", $.identifier, "=>", "{", repeat($._item), "}"),
     class_declaration: ($) =>
