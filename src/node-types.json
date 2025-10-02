@@ -221,7 +221,18 @@
   {
     "type": "impl_block",
     "named": true,
-    "fields": {},
+    "fields": {
+      "templates": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "templates",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -236,10 +247,6 @@
         },
         {
           "type": "statement",
-          "named": true
-        },
-        {
-          "type": "templates",
           "named": true
         },
         {
