@@ -14,40 +14,12 @@ module.exports = grammar({
         $.interface_declaration,
         $.impl_block,
       ),
-    impl_block: ($) =>
-      seq(
-        "impl",
-        field("templates", optional($.templates)),
-        $.identifier,
-        "for",
-        $.type,
-        "=>",
-        "{",
-        repeat(
-          choice(
-            seq("type", $.identifier, "=>", $.type, ";"),
-            seq(
-              choice("public", "private"),
-              $.identifier,
-              "(",
-              commaSep($.parameter),
-              ")",
-              ":",
-              $.type,
-              "=>",
-              "{",
-              repeat($.statement),
-              "}",
-            ),
-          ),
-        ),
-        "}",
-      ),
+
     interface_declaration: ($) =>
       seq(
         "interface",
-        $.identifier, // interface name
-        $.identifier, // type name
+        field("name", $.identifier), // interface name
+        field("type_param", $.identifier), // type name
         optional(seq("impl", commaSep1($.type))),
         "=>",
         "{",
@@ -67,6 +39,36 @@ module.exports = grammar({
               ":",
               $.type,
               ";",
+            ),
+          ),
+        ),
+        "}",
+      ),
+
+    impl_block: ($) =>
+      seq(
+        "impl",
+        field("templates", optional($.templates)),
+        field("trait", $.identifier),
+        "for",
+        field("target", $.type),
+        "=>",
+        "{",
+        repeat(
+          choice(
+            seq("type", $.identifier, "=>", $.type, ";"),
+            seq(
+              choice("public", "private"),
+              $.identifier,
+              "(",
+              commaSep($.parameter),
+              ")",
+              ":",
+              $.type,
+              "=>",
+              "{",
+              repeat($.statement),
+              "}",
             ),
           ),
         ),
