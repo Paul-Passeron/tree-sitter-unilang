@@ -212,11 +212,30 @@ module.exports = grammar({
     parameter: ($) => seq($.identifier, ":", $.type),
     templates: ($) => seq("<", commaSep1($.type), ">"),
     typename: ($) => prec.left(multipleSep1($.identifier, "::")),
+
+    builtin_type: ($) =>
+      choice(
+        "i8",
+        "i16",
+        "i32",
+        "i64",
+        "u8",
+        "u16",
+        "u32",
+        "u64",
+        "f32",
+        "f64",
+        "bool",
+        "void",
+        "char",
+      ),
+
+    // Update the type rule to include builtin types
     type: ($) =>
       choice(
         prec(10, seq("(", commaSep1($.type), ")", repeat("*"))),
-
         prec(10, seq($.typename, optional($.templates), repeat("*"))),
+        prec(11, seq($.builtin_type, repeat("*"))), // Add this line
       ),
   },
 });

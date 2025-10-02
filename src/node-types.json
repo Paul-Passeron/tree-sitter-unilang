@@ -84,6 +84,11 @@
     }
   },
   {
+    "type": "builtin_type",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "char",
     "named": true,
     "fields": {}
@@ -612,6 +617,10 @@
       "required": true,
       "types": [
         {
+          "type": "builtin_type",
+          "named": true
+        },
+        {
           "type": "templates",
           "named": true
         },
@@ -775,11 +784,43 @@
     "named": false
   },
   {
+    "type": "bool",
+    "named": false
+  },
+  {
+    "type": "char",
+    "named": false
+  },
+  {
     "type": "class",
     "named": false
   },
   {
+    "type": "f32",
+    "named": false
+  },
+  {
+    "type": "f64",
+    "named": false
+  },
+  {
     "type": "for",
+    "named": false
+  },
+  {
+    "type": "i16",
+    "named": false
+  },
+  {
+    "type": "i32",
+    "named": false
+  },
+  {
+    "type": "i64",
+    "named": false
+  },
+  {
+    "type": "i8",
     "named": false
   },
   {
@@ -820,6 +861,26 @@
   },
   {
     "type": "type",
+    "named": false
+  },
+  {
+    "type": "u16",
+    "named": false
+  },
+  {
+    "type": "u32",
+    "named": false
+  },
+  {
+    "type": "u64",
+    "named": false
+  },
+  {
+    "type": "u8",
+    "named": false
+  },
+  {
+    "type": "void",
     "named": false
   },
   {
