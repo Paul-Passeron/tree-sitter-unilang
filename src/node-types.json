@@ -114,17 +114,24 @@
   {
     "type": "class_items",
     "named": true,
-    "fields": {},
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "expr",
-          "named": true
-        },
-        {
-          "type": "identifier",
           "named": true
         },
         {
@@ -222,6 +229,16 @@
     "type": "impl_block",
     "named": true,
     "fields": {
+      "method_name": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
