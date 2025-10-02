@@ -119,7 +119,7 @@ module.exports = grammar({
     class_declaration: ($) =>
       seq(
         "class",
-        optional($.templates),
+        field("templates", optional($.templates)),
         $.identifier,
         "=>",
         "{",
