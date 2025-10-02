@@ -274,7 +274,17 @@
     "type": "impl_block",
     "named": true,
     "fields": {
-      "name": {
+      "target_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      },
+      "trait_name": {
         "multiple": false,
         "required": true,
         "types": [
@@ -287,22 +297,18 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
-        {
-          "type": "identifier",
-          "named": true
-        },
         {
           "type": "impl_method",
           "named": true
         },
         {
-          "type": "templates",
+          "type": "impl_type_declaration",
           "named": true
         },
         {
-          "type": "type",
+          "type": "templates",
           "named": true
         }
       ]
@@ -343,7 +349,7 @@
     }
   },
   {
-    "type": "interface_declaration",
+    "type": "impl_type_declaration",
     "named": true,
     "fields": {
       "name": {
@@ -358,13 +364,45 @@
       }
     },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
-          "type": "identifier",
+          "type": "type",
           "named": true
-        },
+        }
+      ]
+    }
+  },
+  {
+    "type": "interface_declaration",
+    "named": true,
+    "fields": {
+      "interface_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type_param": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
         {
           "type": "interface_method_declaration",
           "named": true

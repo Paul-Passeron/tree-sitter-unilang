@@ -18,8 +18,8 @@ module.exports = grammar({
     interface_declaration: ($) =>
       seq(
         "interface",
-        field("name", $.identifier), // interface name
-        $.identifier, // type parameter
+        field("interface_name", $.identifier), // interface name
+        field("type_param", $.identifier), // type parameter
         optional(seq("impl", commaSep1($.type))),
         "=>",
         "{",
@@ -52,16 +52,17 @@ module.exports = grammar({
       seq(
         "impl",
         optional($.templates),
-        field("name", $.identifier),
+        field("trait_name", $.identifier),
         "for",
-        $.type,
+        field("target_type", $.type),
         "=>",
         "{",
-        repeat(
-          choice(seq("type", $.identifier, "=>", $.type, ";"), $.impl_method),
-        ),
+        repeat(choice($.impl_type_declaration, $.impl_method)),
         "}",
       ),
+
+    impl_type_declaration: ($) =>
+      seq("type", field("name", $.identifier), "=>", $.type, ";"),
 
     impl_method: ($) =>
       seq(
