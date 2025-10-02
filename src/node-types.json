@@ -222,12 +222,12 @@
     "type": "impl_block",
     "named": true,
     "fields": {
-      "templates": {
+      "name": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
-            "type": "templates",
+            "type": "identifier",
             "named": true
           }
         ]
@@ -250,6 +250,10 @@
           "named": true
         },
         {
+          "type": "templates",
+          "named": true
+        },
+        {
           "type": "type",
           "named": true
         }
@@ -259,7 +263,18 @@
   {
     "type": "interface_declaration",
     "named": true,
-    "fields": {},
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
