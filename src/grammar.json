@@ -31,6 +31,19 @@
         {
           "type": "SYMBOL",
           "name": "impl_block"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "@include"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "typename"
+            }
+          ]
         }
       ]
     },

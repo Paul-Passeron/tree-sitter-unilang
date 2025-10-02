@@ -13,6 +13,7 @@ module.exports = grammar({
         $.class_declaration,
         $.interface_declaration,
         $.impl_block,
+        seq("@include", $.typename),
       ),
 
     interface_declaration: ($) =>

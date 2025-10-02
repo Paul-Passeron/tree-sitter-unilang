@@ -517,6 +517,10 @@
         {
           "type": "module_declaration",
           "named": true
+        },
+        {
+          "type": "typename",
+          "named": true
         }
       ]
     }
@@ -567,6 +571,10 @@
         },
         {
           "type": "module_declaration",
+          "named": true
+        },
+        {
+          "type": "typename",
           "named": true
         }
       ]
@@ -764,6 +772,10 @@
   },
   {
     "type": "@as",
+    "named": false
+  },
+  {
+    "type": "@include",
     "named": false
   },
   {
