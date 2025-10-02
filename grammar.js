@@ -19,7 +19,7 @@ module.exports = grammar({
       seq(
         "interface",
         field("name", $.identifier), // interface name
-        field("type_param", $.identifier), // type name
+        $.identifier, // type parameter (no field)
         optional(seq("impl", commaSep1($.type))),
         "=>",
         "{",
@@ -48,10 +48,10 @@ module.exports = grammar({
     impl_block: ($) =>
       seq(
         "impl",
-        field("templates", optional($.templates)),
-        field("trait", $.identifier),
+        optional($.templates),
+        field("name", $.identifier),
         "for",
-        field("target", $.type),
+        $.type,
         "=>",
         "{",
         repeat(
