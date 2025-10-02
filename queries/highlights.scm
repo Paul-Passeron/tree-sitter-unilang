@@ -6,9 +6,7 @@
   "else"
   "while"
   "return"
-  "public"
-  "private"
-  "new"
+  "interface"
 ] @keyword
 
 ; Control flow keywords
@@ -28,18 +26,26 @@
 ; Built-in types
 [
   "int"
+  "i8"
+  "i16"
+  "i32"
+  "i64"
+  "u8"
+  "u16"
+  "u32"
+  "u64"
   "char"
   "void"
   "float"
   "double"
 ] @type.builtin
 
-; ; Special operators and directives
-; [
-;   "@include"
-;   "@as"
-;   "@size"
-; ] @keyword.directive
+; Special operators and directives
+[
+  "@include"
+  "@as"
+  "@size"
+] @keyword.directive
 
 ; Assignment and member access operators
 [
@@ -99,6 +105,10 @@
 (class_declaration
   (identifier) @type)
 
+; Interface names in declarations
+(interface_declaration
+  name: (identifier) @type)
+
 ; Function names in declarations
 (function_declaration
   name: (identifier) @function)
@@ -129,4 +139,8 @@
 (generic_parameters (identifier) @type.parameter)
 
 ; Include statements
-(include_statement (module_path (identifier) @module))
+(module_path (identifier) @module)
+
+; Interface member method names
+(interface_members
+  name: (identifier) @function.method)
