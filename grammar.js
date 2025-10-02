@@ -17,7 +17,7 @@ module.exports = grammar({
     impl_block: ($) =>
       seq(
         "impl",
-        optional($.templates),
+        field("templates", optional($.templates)),
         $.identifier,
         "for",
         $.type,
