@@ -163,6 +163,7 @@ module.exports = grammar({
       ),
     binary_expression: ($) => {
       const table = [
+        [10, "::"],
         [9, choice("*", "/", "%")],
         [8, choice("+", "-")],
         [7, choice("<", ">", "<=", ">=")],
