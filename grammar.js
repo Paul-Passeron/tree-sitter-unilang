@@ -220,7 +220,8 @@ module.exports = grammar({
       choice(seq("//", /.*/), seq("/*", /[^*]*\*+([^/*][^*]*\*+)*/, "/")),
 
     parameter: ($) => seq($.identifier, ":", $.type),
-    templates: ($) => seq("<", commaSep1($.type), ">"),
+    templates: ($) =>
+      seq("<", commaSep1($.type), optional(seq("impl", $.typename)), ">"),
     typename: ($) => prec.left(multipleSep1($.identifier, "::")),
 
     builtin_type: ($) =>

@@ -646,6 +646,10 @@
         {
           "type": "type",
           "named": true
+        },
+        {
+          "type": "typename",
+          "named": true
         }
       ]
     }
