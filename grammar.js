@@ -14,6 +14,14 @@ module.exports = grammar({
         $.interface_declaration,
         $.impl_block,
         $.include_dir,
+        $.type_alias,
+      ),
+    type_alias: ($) =>
+      seq(
+        "type",
+        field("aias_name", $.identifier),
+        "=>",
+        field("aliased", $.type),
       ),
     include_dir: ($) => seq("@include", $.typename),
     interface_declaration: ($) =>

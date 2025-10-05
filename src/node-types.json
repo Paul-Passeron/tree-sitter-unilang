@@ -540,6 +540,10 @@
         {
           "type": "module_declaration",
           "named": true
+        },
+        {
+          "type": "type_alias",
+          "named": true
         }
       ]
     }
@@ -594,6 +598,10 @@
         },
         {
           "type": "module_declaration",
+          "named": true
+        },
+        {
+          "type": "type_alias",
           "named": true
         }
       ]
@@ -667,6 +675,32 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "type_alias",
+    "named": true,
+    "fields": {
+      "aias_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "aliased": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
