@@ -328,24 +328,42 @@
           ]
         },
         {
-          "type": "FIELD",
-          "name": "trait_name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "typename"
-          }
-        },
-        {
-          "type": "STRING",
-          "value": "for"
-        },
-        {
-          "type": "FIELD",
-          "name": "target_type",
-          "content": {
-            "type": "SYMBOL",
-            "name": "type"
-          }
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "FIELD",
+                  "name": "trait_name",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "typename"
+                  }
+                },
+                {
+                  "type": "STRING",
+                  "value": "for"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "target_type",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "type"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "FIELD",
+              "name": "target_type",
+              "content": {
+                "type": "SYMBOL",
+                "name": "type"
+              }
+            }
+          ]
         },
         {
           "type": "STRING",

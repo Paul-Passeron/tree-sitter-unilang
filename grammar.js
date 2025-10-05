@@ -61,9 +61,14 @@ module.exports = grammar({
       seq(
         "impl",
         optional($.templates),
-        field("trait_name", $.typename), // Changed from $.identifier to $.typename
-        "for",
-        field("target_type", $.type),
+        choice(
+          seq(
+            field("trait_name", $.typename), // Changed from $.identifier to $.typename
+            "for",
+            field("target_type", $.type),
+          ),
+          field("target_type", $.type),
+        ),
         "=>",
         "{",
         repeat(choice($.impl_type_declaration, $.impl_method)),
@@ -153,7 +158,7 @@ module.exports = grammar({
     statement: ($) =>
       choice(
         seq("for", $.expr, "in", $.expr, "=>", $.statement),
-        seq("return", $.expr, ";"), //
+        seq("return", $.expr, ";"),
         seq($.expr, ";"),
         seq(
           "let",
