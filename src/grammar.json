@@ -47,7 +47,7 @@
       "members": [
         {
           "type": "STRING",
-          "value": "type"
+          "value": "use"
         },
         {
           "type": "FIELD",

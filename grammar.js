@@ -18,7 +18,7 @@ module.exports = grammar({
       ),
     type_alias: ($) =>
       seq(
-        "type",
+        "use",
         field("aias_name", $.identifier),
         "=>",
         field("aliased", $.type),

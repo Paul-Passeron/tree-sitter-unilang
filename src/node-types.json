@@ -952,6 +952,10 @@
     "named": false
   },
   {
+    "type": "use",
+    "named": false
+  },
+  {
     "type": "void",
     "named": false
   },
