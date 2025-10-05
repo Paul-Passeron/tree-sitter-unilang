@@ -908,6 +908,10 @@
     "named": false
   },
   {
+    "type": "in",
+    "named": false
+  },
+  {
     "type": "interface",
     "named": false
   },

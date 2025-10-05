@@ -152,6 +152,7 @@ module.exports = grammar({
 
     statement: ($) =>
       choice(
+        seq("for", $.expr, "in", $.expr, "=>", $.statement),
         seq("return", $.expr, ";"), //
         seq($.expr, ";"),
         seq(
