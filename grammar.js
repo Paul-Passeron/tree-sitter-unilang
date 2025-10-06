@@ -126,6 +126,7 @@ module.exports = grammar({
     class_field: ($) =>
       seq(
         choice("public", "private"),
+        optional("static"),
         field("name", $.identifier),
         seq(":", $.type),
         optional(seq("=>", $.expr)),
