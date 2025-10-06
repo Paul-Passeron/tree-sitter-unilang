@@ -22,6 +22,7 @@ module.exports = grammar({
         field("aias_name", $.identifier),
         "=>",
         field("aliased", $.type),
+        ";",
       ),
     include_dir: ($) => seq("@include", $.typename),
     interface_declaration: ($) =>
@@ -157,6 +158,7 @@ module.exports = grammar({
 
     statement: ($) =>
       choice(
+        ";",
         seq("for", $.expr, "in", $.expr, "=>", $.statement),
         seq("return", $.expr, ";"),
         seq($.expr, ";"),
