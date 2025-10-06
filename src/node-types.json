@@ -940,6 +940,10 @@
     "named": false
   },
   {
+    "type": "static",
+    "named": false
+  },
+  {
     "type": "type",
     "named": false
   },

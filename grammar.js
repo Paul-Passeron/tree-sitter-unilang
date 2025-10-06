@@ -48,6 +48,7 @@ module.exports = grammar({
 
     interface_method_declaration: ($) =>
       seq(
+        optional("static"),
         field("name", $.identifier),
         "(",
         commaSep($.parameter),
@@ -81,6 +82,7 @@ module.exports = grammar({
     impl_method: ($) =>
       seq(
         choice("public", "private"),
+        optional("static"),
         field("name", $.identifier),
         "(",
         commaSep($.parameter),
@@ -109,6 +111,7 @@ module.exports = grammar({
     class_method: ($) =>
       seq(
         choice("public", "private"),
+        optional("static"),
         field("name", $.identifier),
         "(",
         commaSep($.parameter),
